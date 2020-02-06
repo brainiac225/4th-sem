@@ -33,3 +33,6 @@ insert into participated values('&driver', '&reg_num', '&report_num', '&damage_a
 select * from participated;
 commit;
 update participated set damage_amount=25000 where reg_num ='KA053408' and report_num=12\
+insert into accident values(16,'15-MAR-08', 'Domlur');
+select count(distinct driver_id) CNT from participated a,accident b where a.report_num=b.report_num and b.accident_date like '%08';
+select count(report_num) CNT from car c,participated p where c.reg_num=p.reg_num and model='Lancer';
