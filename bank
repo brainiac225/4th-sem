@@ -1,0 +1,46 @@
+create table Branch(branch_name varchar2(15),
+                    branch_city varchar2(10),
+                    assets float,  
+                    primary key(branch_name));
+create table Accounts(accno int,
+                      branch_name varchar2(15),
+                      balance float,
+                      primary key(accno),
+                      foreign key(branch_name) references Branch(branch_name));
+create table Depositor(cust_name varchar2(15),
+                       accno int,
+                       primary key(cust_name,accno),
+                       foreign key(accno) references Accounts(accno));
+                       
+create table Customer(cust_name varchar2(15),
+                      cust_street varchar2(10),
+                      cust_city varchar2(10),
+                      primary key(cust_name));
+                      
+create table Loan(loan_no int,
+                    branch_name varchar2(15),
+                    amount float,
+                    primary key(loan_no),
+                    foreign key(branch_name) references Branch(branch_name));
+                    
+create table Borrower(cust_name varchar2(15),
+                        loan_no int,
+                        primary key(cust_name),
+                        foreign key(cust_name) references Customer(cust_name),
+                        foreign key(loan_no) references Loan(loan_no));
+                        
+insert into Branch values('&branch_name','&branch_city',&assets);
+select *from Branch;
+insert into Accounts values(&accno,'&branch_name',&balance);
+select *from Accounts;
+insert into Depositor  values('&cust_name',&accno);
+select * from Depositor;
+insert into Customer  values('&cust_name','&cust_street','&cust_city');
+select * from Loan;
+insert into Loan values(&loan_no,'&branch_name',&amount);
+insert into Borrower
+Drop table Borrower;
+Drop  table Loan;
+
+insert into Borrower values('&cust_name',&loan_no);
+select * from Borrower;
