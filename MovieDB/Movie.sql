@@ -34,6 +34,12 @@ select * from rating
 
 select mov_title from movies where dir_id in (select dir_id from director where dir_name = 'Hitchcock');
 
-select mov_title from movies, movie_cast where act_id in (select act_id from movie_cast group by act_id having count(act_id)>2);
+select mov_title from movies m, movie_cast mv where m.mov_id=mv.mov_id and act_id in (select act_id from movie_cast group by act_id having count (act_id)>1) group by mov_title having count (*)>1;
 
-select act_name from actor full join movies where mov_year between 2000 and 2015;
+select act_name, mov_title, mov_year from actor a join movie_cast c on a.act_id=c.act_id join movies m on c.mov_id=m.mov_id where m.mov_year not between 2000 and 2015;
+
+select a.act_name, a.act_name, c.mov_title, c.mov_year from actor a, movie_cast b, movies c where a.act_id=b.act_id and b.mov_id=c.mov_id and c.mov_year not between 2000 and 2015; 
+
+select mov_title, max (rev_stars) from movies inner join rating using (mov_id) group by mov_title having max (rev_stars)>0 order by mov_title; 
+
+update rating set rev_stars=5 where mov_id in (select mov_id from movies where dir_id in (select dir_id from director where dir_name = 'Steven Spielberg'));
