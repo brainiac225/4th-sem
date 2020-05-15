@@ -64,7 +64,7 @@ INSERT INTO BOOK_LENDING VALUES ('12-APR-17','12-MAY-17', 1, 11, 104);
 select * from book_lending;
 
 /*1. Retrieve details of all books in the library – id, title, name of publisher, authors, number of copies in each branch, etc. */
-select card_no from book_lending where date_out between '01-jan-2017' and '01-jul-2017' group by card_no having count (*)>3;
+select b.book_id, b.title, b.publisher_name, a.author_name, c.no_of_copies, l.branch_id  from book b, book_authors a, book_copies c, library_branch l  where b.book_id=a.book_id  and b.book_id=c.book_id  and l.branch_id=c.branch_id;
 
 /*2. Get the particulars of borrowers who have borrowed more than 3 books, but from Jan 2017 to Jun 2017.*/
 select card_no from book_lending where date_out between '01-jan-2017' and '01-jul-2017'group by card_no having count (*)>3;
