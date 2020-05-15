@@ -66,15 +66,18 @@ select * from book_lending;
 /*1. Retrieve details of all books in the library – id, title, name of publisher, authors, number of copies in each branch, etc. */
 select card_no from book_lending where date_out between '01-jan-2017' and '01-jul-2017' group by card_no having count (*)>3;
 
-/*2. Delete a book in BOOK table. Update the contents of other tables to reflect this data manipulation operation.*/
+/*2. Get the particulars of borrowers who have borrowed more than 3 books, but from Jan 2017 to Jun 2017.*/
+select card_no from book_lending where date_out between '01-jan-2017' and '01-jul-2017'group by card_no having count (*)>3;
+
+/*3. Delete a book in BOOK table. Update the contents of other tables to reflect this data manipulation operation.*/
 delete from book where book_id=3;
 select * from book;
 
-/*3. Partition the BOOK table based on year of publication. Demonstrate its working with a simple query.*/
+/*4. Partition the BOOK table based on year of publication. Demonstrate its working with a simple query.*/
 create view v_publication as select pub_year from book;
 select * from v_publication;
 
-/*4. Create a view of all books and its number of copies that are currently available in the Library.*/
+/*5. Create a view of all books and its number of copies that are currently available in the Library.*/
 create view v_books as select b.book_id, b.title, c.no_of_copies from book b, book_copies c, library_branch l where b.book_id=c.book_id and c.branch_id=l.branch_id;
 select * from v_books;
 
